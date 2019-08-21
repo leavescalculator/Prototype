@@ -9,9 +9,9 @@
 <style>
   #cy {
       width: 100%;
-      height: 100%;
+      height: 80%;
       position: absolute;
-      top: 50px;
+      top: 100px;
       left: 0px;
   }
 </style>
@@ -19,6 +19,11 @@
 <body>
     <button id="circle" type="button" onclick="circleLayout()">Circle</button>
     <button id="tree" type="button" onclick="treeLayout()">Tree</button>
+    <button id="random" type="button" onclick="randLayout()">Random</button>
+    <hr>
+    <button type="button" onclick="addNode()">Add a Node</button>
+    <input type="text" id="name" placeholder="name"></input>
+    <input type="text" id="parent" placeholder="parent"></input>
     <hr>
     <div><div id="cy"></div></div>
   
@@ -117,6 +122,33 @@
     cy.layout({
       name: 'circle'
     }).run();
+  }
+  function randLayout() {
+    console.log("CLICK");
+    cy.layout({
+      name: 'random'
+    }).run();
+  }
+
+  function addNode() {
+    var name = document.getElementById("name").value;
+    var parent = document.getElementById("parent").value;
+
+    if(name !== ""){
+      cy.add({
+        data: { id: name }
+      })
+      if(parent != "") {
+        cy.add({
+          data: {
+            id: parent + name,
+            source: parent,
+            target: name,
+            arrow: 'triangle'
+          }
+        })
+      }
+    }
   }
   
   console.log(cy.json());
