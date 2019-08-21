@@ -11,7 +11,7 @@
       width: 100%;
       height: 80%;
       position: absolute;
-      top: 100px;
+      top: 120px;
       left: 0px;
   }
 </style>
@@ -21,9 +21,18 @@
     <button id="tree" type="button" onclick="treeLayout()">Tree</button>
     <button id="random" type="button" onclick="randLayout()">Random</button>
     <hr>
-    <button type="button" onclick="addNode()">Add a Node</button>
-    <input type="text" id="name" placeholder="name"></input>
-    <input type="text" id="parent" placeholder="parent"></input>
+    <tr>
+      <td><button type="button" onclick="addNode()">Add a Node</button>
+        <input type="text" id="name" placeholder="name"></input>
+        <input type="text" id="parent" placeholder="parent"></input></td>
+        <td>|</td>
+        <td><button type="button" onclick="addEdge()">Add an edge</button>
+          <input type="text" id="source" placeholder="source"></input>
+          <input type="text" id="dest" placeholder="destination"></input></td>
+    </tr>
+    
+    <hr>
+    <button type="button" onclick="remNode()">Delete selected element</button>
     <hr>
     <div><div id="cy"></div></div>
   
@@ -85,8 +94,8 @@
     {
         selector: 'node',
         style: {
-            shape: 'hexagon',
-            'background-color': 'red',
+            shape: 'rectangle',
+            'background-color': 'blue',
             label: 'data(id)',
             
         }
@@ -111,20 +120,22 @@
     });
   }
 
+  treeLayout();
+
   function treeLayout() {
-    console.log("CLICK");
+    console.log("Tree");
     cy.layout({
       name: 'breadthfirst'
     }).run();
   }
   function circleLayout() {
-    console.log("CLICK");
+    console.log("Circle");
     cy.layout({
       name: 'circle'
     }).run();
   }
   function randLayout() {
-    console.log("CLICK");
+    console.log("Random");
     cy.layout({
       name: 'random'
     }).run();
@@ -134,6 +145,7 @@
     var name = document.getElementById("name").value;
     var parent = document.getElementById("parent").value;
 
+    console.log("Adding " + name + " child of " + parent);
     if(name !== ""){
       cy.add({
         data: { id: name }
@@ -149,8 +161,31 @@
         })
       }
     }
+    console.log(cy.json());
   }
   
+  function addEdge() {
+    var source = document.getElementById("source").value;
+    var dest = document.getElementById("dest").value;
+
+    console.log("Adding " + source + " to " + dest);
+    if(source !== "" && dest !== ""){
+        cy.add({
+          data: {
+            id: source + '-' + dest,
+            source: source,
+            target: dest,
+            arrow: 'triangle'
+          }
+        })
+      }
+    console.log(cy.json());
+  }
+
+  function remNode() {  
+      cy.$(':selected').remove();
+      console.log(cy.json());
+  }
   console.log(cy.json());
 </script>
 </html>
