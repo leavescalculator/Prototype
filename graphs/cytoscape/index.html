@@ -100,7 +100,13 @@
             
         }
     },
-    
+    {
+      selector: 'edge',
+      style: {
+        'curve-style': 'bezier',
+        'target-arrow-shape': 'triangle-tee'
+      }
+    }
     ]        
   });
 
@@ -113,9 +119,9 @@
     cy.add({
         data: {
             id: 'edge' + i,
-            source: source,
-            target: (i % 2 == 0 ? 'a' : 'b'),
-            arrow: 'triangle'
+            target: source,
+            source: (i % 2 == 0 ? 'a' : 'b'),
+           
         }
     });
   }
@@ -156,7 +162,7 @@
             id: parent + name,
             source: parent,
             target: name,
-            arrow: 'triangle'
+            
           }
         })
       }
