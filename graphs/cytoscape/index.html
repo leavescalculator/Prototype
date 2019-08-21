@@ -11,13 +11,18 @@
       width: 100%;
       height: 100%;
       position: absolute;
-      top: 0px;
+      top: 50px;
       left: 0px;
   }
 </style>
 
 <body>
-  <div id="cy"></div>
+    <button id="circle" type="button" onclick="circleLayout()">Circle</button>
+    <button id="tree" type="button" onclick="treeLayout()">Tree</button>
+    <hr>
+    <div><div id="cy"></div></div>
+  
+  
 </body>
 
 <script>
@@ -101,9 +106,19 @@
     });
   }
 
-  cy.layout({
-    name: 'circle'
-  }).run();
+  function treeLayout() {
+    console.log("CLICK");
+    cy.layout({
+      name: 'breadthfirst'
+    }).run();
+  }
+  function circleLayout() {
+    console.log("CLICK");
+    cy.layout({
+      name: 'circle'
+    }).run();
+  }
+  
   console.log(cy.json());
 </script>
 </html>
