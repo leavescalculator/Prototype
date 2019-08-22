@@ -1,19 +1,28 @@
 <template>
   <div class="hello">
+    <button
+        v-if="previousQuestions.length !== 0"
+        v-on:click="goBack"
+    >Previous Question</button>
     <!-- banked hours -->
     <div>banked hours: {{bankedHours}}</div>
     <div v-if="stateType === 'endpoint'">
-        <a :href="currentState.url">
-            <h3>{{currentState.title}}</h3>
+        <a :href="jsonData.endpoints[currentState].url">
+            <h3>{{jsonData.endpoints[currentState].title}}</h3>
         </a>
     </div>
     <div v-else-if="stateType === 'question'">
-        <h3>{{currentState.title}}</h3>
-        <p>{{currentState.description}}</p>
-        <div v-for="answer in currentState.answers">
-            <button v-on:click="changeState(answer)">{{ answer.title }}</button>
+        <h3>{{jsonData.questions[currentState].title}}</h3>
+        <p>{{jsonData.questions[currentState].description}}</p>
+        <div v-for="(answer, index) in jsonData.questions[currentState].answers" v-bind:key="answer">
+            <button v-on:click="selectAnswer(answer, index)">
+                {{ answer.title }}
+            </button>
             <p>{{ answer.description }}</p>
         </div>
+    </div>
+    <div v-else-if="stateType === 'report'">
+        {{previousQuestions}}
     </div>
     <div v-else>
         Unknown state.
@@ -27,21 +36,35 @@ export default {
   name: 'VueDemo',
   data() {
         return {
-            currentState: json.questions[0],
+            currentState: 0,
             stateType: 'question',
             jsonData: json,
-            bankedHours: 0
+            bankedHours: 0,
+            previousQuestions: []
         }
   },
   methods: {
-    changeState: function(answer) {
+    selectAnswer: function(answer, answerIndex) {
+        this.previousQuestions.push({
+            questionIndex: this.currentState,
+            answerIndex: answerIndex
+        })
         this.stateType = answer.nextState.type
         this.bankedHours += answer.addedHours
         if(this.stateType === 'question') {
-            this.currentState = json.questions[answer.nextState.index]
+            this.currentState = answer.nextState.index
         } else if(this.stateType === 'endpoint') {
-            this.currentState = json.endpoints[answer.nextState.index]
+            this.currentState = answer.nextState.index
         }
+    },
+    goBack: function() {
+        var previousQuestion = this.previousQuestions.pop()
+        this.stateType = 'question'
+        this.currentState = previousQuestion.questionIndex
+        this.bankedHours -= json
+            .questions[previousQuestion.questionIndex]
+            .answers[previousQuestion.answerIndex]
+            .addedHours
     }
   }
 }
