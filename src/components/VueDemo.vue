@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    <div>banked hours: {{bankedHours}}</div>
     <div v-if="stateType === 'endpoint'">
         <a :href="currentState.url">
             <h3>{{currentState.title}}</h3>
@@ -9,7 +10,7 @@
         <h3>{{currentState.title}}</h3>
         <p>{{currentState.description}}</p>
         <div v-for="answer in currentState.answers">
-            <button v-on:click="changeState(answer.nextState)">{{ answer.title }}</button>
+            <button v-on:click="changeState(answer)">{{ answer.title }}</button>
             <p>{{ answer.description }}</p>
         </div>
     </div>
@@ -27,16 +28,18 @@ export default {
         return {
             currentState: json.questions[0],
             stateType: 'question',
-            jsonData: json
+            jsonData: json,
+            bankedHours: 0
         }
   },
   methods: {
-    changeState: function(nextState) {
-        this.stateType = nextState.type
+    changeState: function(answer) {
+        this.stateType = answer.nextState.type
+        this.bankedHours += answer.addedHours
         if(this.stateType === 'question') {
-            this.currentState = json.questions[nextState.index]
+            this.currentState = json.questions[answer.nextState.index]
         } else if(this.stateType === 'endpoint') {
-            this.currentState = json.endpoints[nextState.index]
+            this.currentState = json.endpoints[answer.nextState.index]
         }
     }
   }
