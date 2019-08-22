@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    <!-- banked hours -->
     <div>banked hours: {{bankedHours}}</div>
     <div v-if="stateType === 'endpoint'">
         <a :href="currentState.url">
