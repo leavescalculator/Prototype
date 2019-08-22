@@ -18,7 +18,7 @@
                     "title": "Answer 2",
                     "description": "Answer description",
                     "nextState": {
-                        "type": "report",
+                        "type": "endpoint",
                         "index": 0
                     },
                     "addedHours": 0,
@@ -31,10 +31,26 @@
             "description": "Question details",
             "answers": [
                 {
-                    "title": "An answer to another question",
+                    "title": "Answer 1",
                     "description": "Answer description",
                     "nextState": {
-                        "type": "endpoint",
+                        "type": "question",
+                        "index": 2
+                    },
+                    "addedHours": 13,
+                    "isPaid": true
+                }
+            ]
+        },
+        {
+            "title": "Question 3",
+            "description": "Question details",
+            "answers": [
+                {
+                    "title": "Answer 2",
+                    "description": "Answer description",
+                    "nextState": {
+                        "type": "report",
                         "index": 0
                     },
                     "addedHours": 0,
