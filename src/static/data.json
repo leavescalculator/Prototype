@@ -1,0 +1,52 @@
+{
+    "questions": [
+        {
+            "title": "Question 1",
+            "description": "Question details",
+            "answers": [
+                {
+                    "title": "Answer 1",
+                    "description": "Answer description",
+                    "nextState": {
+                        "type": "question",
+                        "index": 1
+                    },
+                    "addedHours": 9,
+                    "isPaid": true
+                },
+                {
+                    "title": "Answer 2",
+                    "description": "Answer description",
+                    "nextState": {
+                        "type": "endpoint",
+                        "index": 0
+                    },
+                    "addedHours": 0,
+                    "isPaid": false
+                }
+            ]
+        },
+        {
+            "title": "Question 2",
+            "description": "Question details",
+            "answers": [
+                {
+                    "title": "An answer to another question",
+                    "description": "Answer description",
+                    "nextState": {
+                        "type": "endpoint",
+                        "index": 0
+                    },
+                    "addedHours": 0,
+                    "isPaid": false
+                }
+            ]
+        }
+    ],
+    "endpoints": [
+        {
+            "title": "Endpoint 1",
+            "url": "A URL to the referred information"
+        }
+    ]
+}
