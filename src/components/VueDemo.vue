@@ -22,7 +22,18 @@
         </div>
     </div>
     <div v-else-if="stateType === 'report'">
-        {{previousQuestions}}
+        <table align="center">
+            <tr>
+                <th>Question</th>
+                <th>Is Paid</th>
+                <th>Added Hours</th>
+            </tr>
+            <tr v-for="previousQuestion in previousQuestions" v-bind:key="previousQuestion">
+                <td>{{jsonData.questions[previousQuestion.questionIndex].title}}</td>
+                <td>{{jsonData.questions[previousQuestion.questionIndex].answers[previousQuestion.answerIndex].isPaid}}</td>
+                <td>{{jsonData.questions[previousQuestion.questionIndex].answers[previousQuestion.answerIndex].addedHours}}</td>
+            </tr>
+        </table>
     </div>
     <div v-else>
         Unknown state.
